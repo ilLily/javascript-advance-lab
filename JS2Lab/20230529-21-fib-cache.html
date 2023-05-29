@@ -30,20 +30,24 @@
 
         function fib(a) {
             const arr = [];
-            for (let i = 0; i < a; i++) {
-                let f;
-                if (arr.length === 0) {
-                    arr.push(0);
-                } else if (arr.length === 1) {
-                    arr.push(1);
-                } else {
-                    let plusArr = arr.slice(-2);
-                    f = plusArr[0] + plusArr[1];
-                    arr.push(f);
+            if (a < 0) {
+                return 0;
+            } else {
+                for (let i = 0; i < a; i++) {
+                    let f;
+                    if (arr.length === 0) {
+                        arr.push(0);
+                    } else if (arr.length === 1) {
+                        arr.push(1);
+                    } else {
+                        let plusArr = arr.slice(-2);
+                        f = plusArr[0] + plusArr[1];
+                        arr.push(f);
+                    }
+                    console.log(f);
                 }
-                console.log(f);
+                return arr;
             }
-            return arr;
         }
 
     </script>
