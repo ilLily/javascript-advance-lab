@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Target/CurrentTarget</title>
+    <style>
+        .rect {
+            position: relative;
+            width: 800px;
+            height: 600px;
+            background-color: lightcyan;
+            border: 1px solid black;
+        }
+    
+        .ball {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: yellow;
+            text-align: center;
+            border: 1px solid black;
+            left: 100px;
+            top: 100px;
+        }
+    
+        </style>
+</head>
+<body>
+    <div class="rect">
+        <div class="ball"></div>
+    </div>
+    <script>
+        const rect= document.querySelector(".rect");
+        const ball = document.querySelector(".ball");
+        const handler1 = (event)=>{
+            console.log(1);
+        }
+        for(let i =0; i <5; i++){
+            //handler1 will execute only once.
+            rect.addEventListener('click', handler1);
+            //below will print 2 five times. 
+            rect.addEventListener('click', ()=>console.log(2));
+        }
+        
+    </script>
+</body>
+</html>

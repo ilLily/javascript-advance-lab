@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Target/CurrentTarget</title>
+    <style>
+        .rect {
+            position: relative;
+            width: 600px;
+            height: 600px;
+            background-color: lightcyan;
+            border: 1px solid black;
+        }
+    
+        .ball {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            /* background-color: pink; */
+            border: 1px solid black;
+            pointer-events:none;
+            transition:1s;
+            opacity: 1;
+        }
+
+        </style>
+</head>
+<body>
+    <div class="rect">
+    
+    </div>
+
+    <script>
+        const rect = document.querySelector(".rect");
+        const mouseDown = ()=>{
+            rect.addEventListener('mousemove', mouseMove);
+        }
+        const mouseUp = ()=>{
+            rect.removeEventListener('mousemove', mouseMove);
+        }
+        const mouseMove = event => {
+            const el = document.createElement('div')
+            const rendColor = Math.floor(Math.random() * (256*256*256-1));
+            el.className = 'ball';
+            el.style.backgroundColor = `#${rendColor.padStart(6,"F")}`; 
+            el.style.top = event.offsetY - 10 + 'px';
+            el.style.left = event.offsetX - 10 + 'px';
+            rect.append(el);
+            setTimeout(()=>{
+                el.style.top = parseInt(el.style.top) + 200 +"px";
+                el.style.opacity = 0;
+            },1000);
+            setTimeout(()=>{
+                el.remove();
+            },2000);
+          
+        }
+        rect.addEventListener('mousedown', mouseDown);
+        window.addEventListener('mouseup', mouseUp);
+     
+    </script>
+</body>
+</html>

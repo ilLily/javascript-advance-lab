@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>document</title>
+
+</head>
+<body>
+<div class="ccc">123</div>
+<div class="ccc">456</div>
+<div class="ccc">789</div>
+<div id="info">info</div>
+<div id="info">info2</div>
+<div id="info">info3</div>
+<script>
+   const str = 'abcde';
+   const ccc = document.querySelectorAll('.ccc');
+   console.log(str.constructor.name);
+   console.log(str[Symbol.iterator]);
+   console.log([...str]);
+   console.log(ccc.constructor.name);
+   console.log(ccc[Symbol.iterator]);
+   console.log([...ccc]);
+   console.log(info.constructor.name);
+   console.log(info[Symbol.iterator]);
+   console.log([...info]);
+
+</script>
+</body>
+</html>

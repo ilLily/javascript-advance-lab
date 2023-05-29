@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Target/CurrentTarget</title>
+    <style>
+        .rect {
+            position: relative;
+            width: 800px;
+            height: 600px;
+            background-color: lightcyan;
+            border: 1px solid black;
+        }
+    
+        .ball {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: yellow;
+            text-align: center;
+            border: 1px solid black;
+            left: 100px;
+            top: 100px;
+        }
+        #info{
+            position:fixed;
+            top: 0; 
+            left: 50%;
+            background-color: gray;
+        }
+        </style>
+</head>
+<body>
+    <div class="rect">
+        <div class="ball"></div>
+    </div>
+    <div id="info"></div>
+    <script>
+        const rect = document.querySelector(".rect");
+        const info = document.querySelector('#info')
+        rect.addEventListener('mousemove', event=>{
+            console.log(this); //window
+            info.innerHTML = `
+            event.page = ${event.pageX}, ${event.pageY}<br>
+            event.client = ${event.clientX}, ${event.clientY}<br>
+            event.offset = ${event.offsetX}, ${event.offsetY}<br>
+            `;
+        })
+        // rect.addEventListener('mousemove', function(event) {
+        //     console.log(this); //rect
+        //     info.innerText = `
+        //     event.page = ${event.pageX}, ${event.pageY}<br>
+        //     event.client = ${event.clientX}, ${event.clientY}<br>
+        //     event.offset = ${event.offsetX}, ${event.offsetY}<br>
+        // `;
+        // })
+
+    </script>
+</body>
+</html>

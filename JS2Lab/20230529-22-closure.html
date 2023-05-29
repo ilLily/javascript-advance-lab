@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>document</title>
+
+</head>
+<body>
+  
+<script>
+    const f = (function(){
+        let n = 3;
+        return function(a){
+            n--;
+            if(n>=0){
+                return a*a;
+            }else{
+                return null;
+            }
+        }
+    })();
+    console.log(n);
+    console.log(f(6));
+    console.log(f(7));
+    console.log(f(8));
+    console.log(f(9));
+
+</script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Target/CurrentTarget</title>
+    <style>
+        .rect {
+            position: relative;
+            width: 800px;
+            height: 600px;
+            background-color: lightcyan;
+            border: 1px solid black;
+        }
+    
+        .ball {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: yellow;
+            text-align: center;
+            border: 1px solid black;
+
+        }
+        .ball2 {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: pink;
+            text-align: center;
+            border: 1px solid black;
+         
+        }
+    
+        </style>
+</head>
+<body>
+    <div class="rect"></div>
+    <script>
+        
+        const rect = document.querySelector('.rect')
+        for(let i=0; i <10; i++){
+            const el = document.createElement('div');
+            el.classList.add(Math.random()<0.5? "ball": "ball2");
+
+            rect.append(el);
+        }
+
+    </script>
+</body>
+</html>
