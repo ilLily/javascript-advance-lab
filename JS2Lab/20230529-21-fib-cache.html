@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,29 +8,45 @@
     <title>document</title>
 
 </head>
+
 <body>
-  
-<script>
-    const cache = [0,1];
-    function fib(n){
-        if(cache[n]) return cache[n];
-        if(n<=0) return 0;
-        if(n===1) return 1;
-        const v =fib(n-1) + fib(n-2);
-        cache[n] = v;
-        return v;
-    }
-    startTime = Date.now();
-    for(let i =1; i <42; i++){
-        console.log(i,":", fib(i));
-    }
-    console.log(`${Date.now()-startTime}ms`);
+
+    <script>
+        const cache = [0, 1];
+        function fib(n) {
+            if (cache[n]) return cache[n];
+            if (n <= 0) return 0;
+            if (n === 1) return 1;
+            const v = fib(n - 1) + fib(n - 2);
+            cache[n] = v;
+            return v;
+        }
+        startTime = Date.now();
+        for (let i = 1; i < 42; i++) {
+            console.log(i, ":", fib(i));
+        }
+        console.log(`${Date.now() - startTime}ms`);
 
 
-    for(let i=1; i<42;i++){
-        const arr = [];
-        
-    }
-</script>
+        function fib(a) {
+            const arr = [];
+            for (let i = 0; i < a; i++) {
+                let f;
+                if (arr.length === 0) {
+                    arr.push(0);
+                } else if (arr.length === 1) {
+                    arr.push(1);
+                } else {
+                    let plusArr = arr.slice(-2);
+                    f = plusArr[0] + plusArr[1];
+                    arr.push(f);
+                }
+                console.log(f);
+            }
+            return arr;
+        }
+
+    </script>
 </body>
+
 </html>
