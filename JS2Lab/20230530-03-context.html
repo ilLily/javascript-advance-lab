@@ -12,15 +12,23 @@
 <body>
 
     <script>
+        const obj1 = {
+            subObj: () => {
+                console.log(this);
+                return this;
+            }
+        }
 
         const obj = {
             name: 'Lily',
             f1: function () {
                 return () => this;
-            },
+            }
         }
 
-        console.log(obj.f1()());
+        obj1.subObj(); //window
+        console.log(obj.f1()()); //obj
+        //我呼叫obj.f1這個function的時候，this 才綁定
     </script>
 </body>
 

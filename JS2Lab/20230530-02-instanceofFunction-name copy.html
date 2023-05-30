@@ -38,14 +38,14 @@
         // obj.name.lkObj.laugh();
 
         for (let s in obj) {
-            if (obj[s] instanceof Function) {
-                console.log(s, obj[s].name, obj[s]());
+            if (obj[s] instanceof Function) { //if value is a function 
+                console.log('1st', obj[s].name, obj[s]());
             }
         }
         for (let s in obj) {
-            if (obj[s] instanceof Function) {
+            if (obj[s] instanceof Function) { // if value is a function 
                 const f = obj[s];
-                console.log(s, f.name, f());
+                console.log('2nd', f.name, f());
             }
         }
 

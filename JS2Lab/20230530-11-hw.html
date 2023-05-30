@@ -44,16 +44,12 @@
     <script>
 
         const usp = new URLSearchParams(location.search);
+        let l = usp.get('l');
+        let h = usp.get('h');
 
-        const products2 = products1.filter(({ price }) => {
-            return price > 500;
-        })
-        const products3 = products1.filter(({ price }) => {
-            return price > 500 && price < 600;
-        })
-
-        products3.forEach(({ id, bookname, author, pages, price }) => {
-            str += `
+        tableData.innerHTML = products1.filter(({ price }) => {
+            return price > l && price < h;
+        }).map(({ id, bookname, author, pages, price }) => (`
             <tr>
                 <td>${id}</td>
                 <td>${bookname}</td>
@@ -61,10 +57,8 @@
                 <td>${pages}</td>
                 <td>${author}</td>
             </tr>
-            `;
-        });
+            `)).join("");
 
-        tableData.innerHTML = str;
 
     </script>
 </body>

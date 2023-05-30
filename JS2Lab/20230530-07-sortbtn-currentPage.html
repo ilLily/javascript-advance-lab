@@ -12,11 +12,11 @@
 <body>
     <div class="container">
         <div class="row">
-            <div class="col">
-                <a type="button" class="btn btn-primary">Price asc</a>
-                <a type="button" class="btn btn-primary">Price desc</a>
-                <a type="button" class="btn btn-primary">Author asc</a>
-                <a type="button" class="btn btn-primary">Author desc</a>
+            <div class="col" id="sortBtns">
+                <button type="button" class="btn btn-primary" sortBy="price" sortType="asc">Price asc</button>
+                <button type="button" class="btn btn-primary" sortBy="price" sortType="desc">Price desc</button>
+                <button type="button" class="btn btn-primary" sortBy="author" sortType="asc">Author asc</button>
+                <button type="button" class="btn btn-primary" sortBy="author" sortType="desc">Author desc</button>
             </div>
         </div>
     </div>
@@ -37,32 +37,53 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="data/products1.js"></script>
     <script>
-        let str = "";
-        let sortFunc = () => { };
-        // products1.sort((a, b) => {
-        //     return a.price - b.price;
-        // })
+        const sortBtns = document.querySelector('#sortBtns');
+        const tableData = document.querySelector('#tableData');
 
-        // products1.sort(function (a, b) {
-        //     var nameA = a.author.toUpperCase();
-        //     var nameB = b.author.toUpperCase();
-        //     return nameA < nameB ? -1 : 1;
-        // });
+        const showData = (sortBy, sortType) => {
+            console.log('called');
+            const sortResult = products1.sort((a, b) => {
+                if (sortBy === 'price' && sortType === 'asc') {
+                    return a.price - b.price;
+                } else if (sortBy === 'price' && sortType === 'desc') {
+                    return b.price - a.price;
+                } else if (sortBy === 'author' && sortType === 'asc') {
+                    return a.author > b.author ? 1 : -1;
+                } else if (sortBy === 'author' && sortType === 'desc') {
+                    return a.author < b.author ? 1 : -1;
+                }
+            })
+            return sortResult;
+        }
+
+        tableData.innerHTML = products1.map(({ id, bookname, price, pages, author }) => (`<tr>
+                                <td>${id}</td>
+                                <td>${bookname}</td>
+                                <td>${price}</td>
+                                <td>${pages}</td>
+                                <td>${author}</td>
+                            </tr>`)).join('');
 
 
-
-        products1.forEach(({ id, bookname, author, pages, price }) => {
-            str += `
-            <tr>
-                <td>${id}</td>
-                <td>${bookname}</td>
-                <td>${price}</td>
-                <td>${pages}</td>
-                <td>${author}</td>
-            </tr>
-            `;
+        sortBtns.addEventListener('click', (e) => {
+            const btns = sortBtns.children;
+            for (let btn of btns) {
+                if (btn.classList.contains('active')) {
+                    btn.classList.remove('active');
+                }
+            }
+            e.target.classList.add('active');
+            let sortBy = e.target.getAttribute('sortBy');
+            let sortType = e.target.getAttribute('sortType');
+            const data = showData(sortBy, sortType);
+            tableData.innerHTML = data.map(({ id, bookname, price, pages, author }) => (`<tr>
+                        <td>${id}</td>
+                        <td>${bookname}</td>
+                        <td>${price}</td>
+                        <td>${pages}</td>
+                        <td>${author}</td>
+                       </tr>`)).join('')
         });
-        tableData.innerHTML = str;
 
     </script>
 </body>
