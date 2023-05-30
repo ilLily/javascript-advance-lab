@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>document</title>
+
+</head>
+
+<body>
+
+    <script>
+
+        const obj = {
+            name: {
+                first: 'Lily',
+                Last: 'Kuo',
+                lkObj: {
+                    age: 20,
+                    laugh: () => {
+                        console.log("lkObj", this);
+                    }
+                }
+            },
+            f1: function () {
+                return this;
+            },
+            f2() {
+                return this;
+            },
+            arrowFunc: () => {
+                return this;
+            }
+        }
+
+        // obj.name.lkObj.laugh();
+
+        for (let s in obj) {
+            if (obj[s] instanceof Function) {
+                console.log(s, obj[s].name, obj[s]());
+            }
+        }
+        for (let s in obj) {
+            if (obj[s] instanceof Function) {
+                const f = obj[s];
+                console.log(s, f.name, f());
+            }
+        }
+
+
+
+    </script>
+</body>
+
+</html>
