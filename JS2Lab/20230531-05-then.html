@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+</head>
+
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="data/products1.js"></script>
+    <script>
+        const promise1 = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                Math.random() > .5 ? resolve('abc') : reject('def');
+            }, 1500);
+        });
+        promise1.then((a) => {
+            console.log(a);
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    Math.random() > .5 ? resolve('2abc') : reject('2def');
+                }, 1500);
+            })
+        }).then((b) => {
+            console.log(b);
+        }).catch((ex) => {
+            console.log(ex);
+        })
+
+    </script>
+</body>
+
+</html>
