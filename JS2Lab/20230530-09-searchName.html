@@ -61,8 +61,8 @@
         showList(products1);
 
 
-        const sip = new URLSearchParams(location.search);
-        let text = sip.get('searchText');
+        const usp = new URLSearchParams(location.search);
+        let text = usp.get('searchText');
         if (text) {
             const data = products1.filter(({ bookname, author }) => {
                 return bookname.includes(text) || author.includes(text);
