@@ -15,15 +15,28 @@
     <script>
         const arr = [1, 47, 36, 48, 66, 99, 2];
         arr.reduce((a, v, i) => {
-            console.log({ a, v });
+            //console.log({ a, v });
             return a + v;
         });
 
         arr.reduce((a, v, i) => {
-            console.log({ a, v });
+            //console.log({ a, v });
             return a + v;
         }, 0);
+        console.log(products1);
 
+        // const sum = products1.reduce((a, v) => {
+        //     let ap = a.price;
+        //     let vp = v.price;
+        //     return a instanceof Object ? a.price + v.price : a + v.price;
+        // }, 0)
+        // console.log(sum);
+
+        const sum = products1.reduce((a, v) => {
+            let sum = a + v.price;
+            return sum;
+        }, 0)
+        console.log(sum);
     </script>
 </body>
 

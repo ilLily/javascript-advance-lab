@@ -40,41 +40,24 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="data/products1.js"></script>
     <script>
-        let str = "";
-        let sortFunc = () => { };
-        const usp = new URLSearchParams(location.search);
-        console.log()
-        switch (usp.get('orderBy')) {
-            case 'priceAsc':
-                sortFunc = (a, b) => {
-                    return a.price - b.price;
-                };
-                break;
-            case 'priceDesc':
-                sortFunc = (a, b) => {
-                    return b.price - a.price;
-                };
-                break;
-            case 'authorAsc':
-                sortFunc = (a, b) => {
-                    //作者都是英文再用toUpperCase()
-                    // let aAuthor = a.author.toUpperCase();
-                    // let bAuthor = b.author.toUpperCase();
-                    return a.author < b.author ? -1 : 1
-                };
-                break;
-            case 'authorDesc':
-                sortFunc = (a, b) => {
-                    //作者都是英文再用toUpperCase()
-                    // let aAuthor = a.author.toUpperCase();
-                    // let bAuthor = b.author.toUpperCase();
-                    return a.author > b.author ? -1 : 1
-                };
-                break;
-        };
-        products1.sort(sortFunc);
-        products1.forEach(({ id, bookname, author, pages, price }) => {
-            str += `
+
+
+        const orderBy = (condition) => {
+            const con = conditions[condition];
+            const data = products1.sort(con);
+            render(data);
+        }
+
+        const conditions = {
+            price_asc: (a, b) => (a.price - b.price),
+            price_desc: (a, b) => (b.price - a.price),
+            author_asc: (a, b) => (a.author < b.author ? -1 : 1),
+            author_desc: (a, b) => (a.author > b.author ? -1 : 1)
+        }
+
+
+        const render = (data) => {
+            tableData.innerHTML = data.map(({ id, bookname, author, pages, price }) => (`
             <tr>
                 <td>${id}</td>
                 <td>${bookname}</td>
@@ -82,9 +65,9 @@
                 <td>${pages}</td>
                 <td>${author}</td>
             </tr>
-            `;
-        });
-        tableData.innerHTML = str;
+            `)).join('');
+        }
+        render(products1);
 
     </script>
 </body>
