@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+</head>
+
+<body>
+    <script type="module">
+        import f1, { b, c, d } from "./tools/my-js01.js"
+        import f2, { b as newB } from "./tools/my-js02.js"
+        import { b as anotherB } from "./tools/my-js02.js"
+        //import same function from same file and change name using 'as', they still point  to the same function in the original file. 
+        //if the imported function was changed, the original file's result will change too. 
+        newB.Attr = "Little umbrella";
+        console.log(anotherB.Attr);
+        console.log(newB === anotherB);
+        console.log(f1);
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-6" id="sortBtns">
+                <a type="button" class="btn btn-primary" href="javascript:" data-ob="price_asc">Price asc</a>
+                <a type="button" class="btn btn-primary" href="javascript:" data-ob="price_desc">Price desc</a>
+                <a type="button" class="btn btn-primary" href="javascript:" data-ob="author_asc">Author asc</a>
+                <a type="button" class="btn btn-primary" href="javascript:" data-ob="author_desc">Author desc</a>
+            </div>
+            <div class="col-6">
+                <input type="text" class="form-control" id="search">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">書名</th>
+                            <th scope="col">價錢</th>
+                            <th scope="col">頁數</th>
+                            <th scope="col">作者</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableData">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="data/products1.js"></script>
+    <script>
+        const sortBtnGroup = document.querySelector('#sortBtns');
+        const searchInput = document.querySelector('#search');
+
+        sortBtnGroup.addEventListener('click', (e) => {
+            let sortBtn = e.target;
+            // console.log(sortBtn);
+            if (e.target.classList.contains('btn')) {
+                let sb = sortBtn.getAttribute('data-ob');
+                setQs(sb, '');
+            }
+        })
+
+        searchInput.addEventListener('input', () => {
+            setQs('', searchInput.value);
+
+        })
+
+        const setQs = (sortStr, searchStr) => {
+            let qsObj = {};
+            if (sortStr) {
+                qsObj.sort = sortStr;
+            }
+            if (searchStr) {
+                qsObj.search = searchStr;
+            }
+            console.log(qsObj);
+
+        }
+
+        const orderBy = (condition) => {
+            const con = conditions[condition];
+            const data = products1.sort(con);
+            render(data);
+        }
+
+        const conditions = {
+            price_asc: (a, b) => (a.price - b.price),
+            price_desc: (a, b) => (b.price - a.price),
+            author_asc: (a, b) => (a.author < b.author ? -1 : 1),
+            author_desc: (a, b) => (a.author > b.author ? -1 : 1)
+        }
+
+
+        const render = (data) => {
+            tableData.innerHTML = data.map(({ id, bookname, author, pages, price }) => (`
+            <tr>
+                <td>${id}</td>
+                <td>${bookname}</td>
+                <td>${price}</td>
+                <td>${pages}</td>
+                <td>${author}</td>
+            </tr>
+            `)).join('');
+        }
+        render(products1);
+
+    </script>
+</body>
+
+</html>
