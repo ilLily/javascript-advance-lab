@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+        .rect {
+            position: relative;
+            width: 800px;
+            height: 600px;
+            background-color: #dbf4f8;
+            border: 1px solid black;
+        }
+
+        .ball {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background-color: red;
+            color: white;
+            font-weight: 800;
+            border: 1px solid black;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            transition: 0.5s;
+        }
+
+        .ballBtn {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background-color: rgb(219, 50, 238);
+            color: white;
+            font-weight: 800;
+            border: 1px solid black;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 60px;
+            left: 370px;
+            top: 270px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="rect">
+        <div class="ballBtn" onclick="toggleClick()">開合</div>
+    </div>
+    <script>
+        const rect = document.querySelector(".rect");
+        const ballBtn = document.querySelector(".ballBtn");
+        const ballNum = 12;
+        const angUnit = (2 * Math.PI) / ballNum;
+        let balls = [];
+        let isOpened = false; // 一開始合起來的
+
+        for (let i = 0; i < ballNum; i++) {
+            let x = 400 - 20 + Math.floor(Math.cos(angUnit * i) * 240);
+            let y = 300 - 20 + Math.floor(Math.sin(angUnit * i) * 240);
+
+            const b = document.createElement("div");
+            b.className = "ball";
+            b.style.left = "380px";
+            b.style.top = "280px";
+            b.innerHTML = i + 1;
+
+            balls.push({
+                el: b,
+                x1: 380,
+                y1: 280,
+                x2: x,
+                y2: y,
+            });
+
+            rect.append(b);
+        }
+        rect.append(ballBtn); // 抽出來再加上去
+
+        function doOpen() {
+            for (let i = 0; i < balls.length; i++) {
+                setTimeout(() => {
+                    const item = balls[i];
+                    item.el.style.left = item.x2 + "px";
+                    item.el.style.top = item.y2 + "px";
+                }, 100 * i);
+            }
+        }
+        function doClose() {
+            for (let i = 0; i < balls.length; i++) {
+                setTimeout(() => {
+                    const item = balls[balls.length - 1 - i];
+                    item.el.style.left = item.x1 + "px";
+                    item.el.style.top = item.y1 + "px";
+                }, 100 * i);
+            }
+        }
+
+        function toggleClick() {
+            isOpened = !isOpened;
+            if (isOpened) {
+                doOpen();
+            } else {
+                doClose();
+            }
+        }
+    </script>
+</body>
+
+</html>

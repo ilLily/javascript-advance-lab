@@ -47,44 +47,72 @@
         const searchInput = document.querySelector('#search');
 
         sortBtnGroup.addEventListener('click', (e) => {
+            let btns = sortBtnGroup.children;
             let sortBtn = e.target;
-            // console.log(sortBtn);
-            if (e.target.classList.contains('btn')) {
-                let sb = sortBtn.getAttribute('data-ob');
-                setQs(sb, '');
+            for (let btn of btns) {
+                btn.classList.remove('active');
+            }
+            sortBtn.classList.add('active')
+
+            if (sortBtn.classList.contains('btn')) {
+
+                setQs();
             }
         })
 
         searchInput.addEventListener('input', () => {
-            setQs('', searchInput.value);
+            setQs();
 
         })
 
-        const setQs = (sortStr, searchStr) => {
+        const setQs = () => {
             let qsObj = {};
-            if (sortStr) {
-                qsObj.sort = sortStr;
+            let sortBtn = document.querySelector('a.active')
+            if (sortBtn) {
+                qsObj.sort = sortBtn.getAttribute('data-ob');
             }
-            if (searchStr) {
-                qsObj.search = searchStr;
+            if (searchInput.value) {
+                qsObj.search = searchInput.value;
             }
-            console.log(qsObj);
-
+            const uspQs = new URLSearchParams(qsObj);
+            console.log(`?${uspQs}`);
+            history.pushState(qsObj, '', `?${uspQs}`);
+            console.log()
+            orderBy(uspQs)
         }
-
+        window.addEventListener('popstate', event => {
+            const usp = new URLSearchParams(location.search);
+            let sort = usp.get("sort");
+            let btns = sortBtnGroup.children;
+            for (let btn of btns) {
+                btn.getAttribute("data-ob") === sort ? btn.classList.add('active') : btn.classList.remove('active');
+            }
+            console.log(event.state);
+            orderBy(usp)
+        })
         const orderBy = (condition) => {
-            const con = conditions[condition];
-            const data = products1.sort(con);
-            render(data);
-        }
+            const conditions = {
+                price_asc: (a, b) => (a.price - b.price),
+                price_desc: (a, b) => (b.price - a.price),
+                author_asc: (a, b) => (a.author < b.author ? -1 : 1),
+                author_desc: (a, b) => (a.author > b.author ? -1 : 1)
+            }
 
-        const conditions = {
-            price_asc: (a, b) => (a.price - b.price),
-            price_desc: (a, b) => (b.price - a.price),
-            author_asc: (a, b) => (a.author < b.author ? -1 : 1),
-            author_desc: (a, b) => (a.author > b.author ? -1 : 1)
+            let st = condition.get('sort');
+            let sh = condition.get('search');
+            let p1data = [...products1];
+            if (st) {
+                p1data.sort(conditions[st]);
+            }
+            let res;
+            if (sh) {
+                p1data = p1data.filter(({ bookname }) => {
+                    console.log(bookname.includes(sh));
+                    return bookname.includes(sh);
+                })
+            }
+            render(p1data);
         }
-
 
         const render = (data) => {
             tableData.innerHTML = data.map(({ id, bookname, author, pages, price }) => (`

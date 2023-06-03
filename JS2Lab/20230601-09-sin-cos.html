@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        .rect {
+            position: relative;
+            width: 800px;
+            height: 600px;
+            background-color: #dbf4f8;
+            border: 1px solid black;
+        }
+
+        .ball {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background-color: red;
+            color: white;
+            font-weight: 800;
+            border: 1px solid black;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            transition: 0.5s;
+        }
+
+        .ballBtn {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background-color: rgb(219, 50, 238);
+            color: white;
+            font-weight: 800;
+            border: 1px solid black;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 60px;
+            left: 370px;
+            top: 270px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="rect">
+        <div class="ballBtn" onclick="toggleClick()">開合</div>
+    </div>
+
+    <script>
+        const rect = document.querySelector(".rect");
+        const ballBtn = document.querySelector(".ballBtn");
+        const ballNum = 52;
+        const angUnit = (2 * Math.PI) / ballNum;
+        let balls = [];
+        let isOpened = false; // 一開始合起來的
+        const cardTexts = [
+            "A",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "J",
+            "Q",
+            "K",
+        ];
+        const cardSuits = [
+            '<i class="fa-solid fa-triangle-exclamation"></i>',
+            '<i class="fa-solid fa-heart"></i>',
+            '<i class="fa-solid fa-diamond"></i>',
+            '<i class="fa-solid fa-spa"></i>',
+        ];
+
+        const ballClick = (event) => {
+            const t = event.currentTarget;
+            t.parentElement.append(t);
+
+            const one = balls.find((v) => v.el === t);
+
+            // show text
+            one.el.innerHTML = cardSuits[one.suiteIndex] + cardTexts[one.textIndex];
+        };
+
+        for (let i = 0; i < ballNum; i++) {
+            const b = document.createElement("div");
+            b.className = "ball";
+            b.style.left = "380px";
+            b.style.top = "280px";
+            const suiteIndex = Math.floor(i / 13);
+            const textIndex = i % 13;
+            b.setAttribute("data-suite", suiteIndex); // 花色索引
+            b.setAttribute("data-text", textIndex);   // 文字索引
+            balls.push({
+                el: b,
+                x1: 380,
+                y1: 280,
+                suiteIndex,
+                textIndex,
+            });
+            b.addEventListener("click", ballClick);
+            rect.append(b);
+        }
+
+        rect.append(ballBtn); // 抽出來再加上去
+
+        function doOpen() {
+            balls.sort(() => Math.random() - 0.5); // 弄亂
+            for (let i = 0; i < balls.length; i++) {
+                const item = balls[i];
+                let x = 400 - 20 + Math.floor(Math.cos(angUnit * i) * 240);
+                let y = 300 - 20 + Math.floor(Math.sin(angUnit * i) * 240);
+                item.x2 = x;
+                item.y2 = y;
+                rect.prepend(item.el);
+            }
+
+            for (let i = 0; i < balls.length; i++) {
+                setTimeout(() => {
+                    const item = balls[i];
+                    item.el.style.left = item.x2 + "px";
+                    item.el.style.top = item.y2 + "px";
+                }, 10 * i);
+            }
+        }
+        function doClose() {
+            for (let i = 0; i < balls.length; i++) {
+                const item = balls[balls.length - 1 - i];
+                item.el.innerHTML = "";
+                setTimeout(() => {
+                    item.el.style.left = item.x1 + "px";
+                    item.el.style.top = item.y1 + "px";
+                }, 10 * i);
+            }
+        }
+        function toggleClick() {
+            isOpened = !isOpened;
+            if (isOpened) {
+                doOpen();
+            } else {
+                doClose();
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -33,6 +33,6 @@ const changeBgInEverySecond = (color, delay) => {
 changeBgInEverySecond('red', 1000)
     .then(() => changeBgInEverySecond('orange', 1000))
     .then(() => changeBgInEverySecond('yellow', 1000))
-    .then(() => changeBgInEverySecond('yellow', 1000))
-    .then(() => changeBgInEverySecond('yellow', 1000))
-    .then(() => changeBgInEverySecond('yellow', 1000));
+    .then(() => changeBgInEverySecond('green', 1000))
+    .then(() => changeBgInEverySecond('blue', 1000))
+    .then(() => changeBgInEverySecond('purple', 1000));
